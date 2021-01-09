@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_graph"
+    app:startDestination="@id/reciepeListFragment">
+
+    <fragment
+        android:id="@+id/reciepeListFragment"
+        android:name="com.example.composejetpackmvvmproject.ui.fragment.ReciepeListFragment"
+        android:label="ReciepeListFragment" >
+        <action
+            android:id="@+id/action_reciepeListFragment_to_reciepeFragment"
+            app:destination="@id/reciepeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/reciepeFragment"
+        android:name="com.example.composejetpackmvvmproject.ui.fragment.ReciepeFragment"
+        android:label="ReciepeFragment" />
+</navigation>
