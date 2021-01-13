@@ -1,6 +1,9 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -66,6 +69,10 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
+    def retrofit="2.9.0"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit"
+
     def compose = "1.0.0-alpha08"
     implementation "androidx.compose.ui:ui:$compose"
     implementation "androidx.compose.foundation:foundation:$compose"
@@ -75,4 +82,16 @@ dependencies {
     implementation "androidx.compose.material:material-icons-core:$compose"
     implementation "androidx.compose.material:material-icons-extended:$compose"
 //    implementation "androidx.navigation:navigation-compose:1.0.0-alpha04"
+
+    //dagger_hilt
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+
+    //viewmodel
+    def hilt_lifecycle = "1.0.0-alpha02"
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_lifecycle"
+    kapt "androidx.hilt:hilt-compiler:$hilt_lifecycle"
+
+
+
 }

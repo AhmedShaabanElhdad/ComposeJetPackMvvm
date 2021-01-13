@@ -1,13 +1,9 @@
-package com.example.composejetpackmvvmproject.ui.fragment
+package com.example.composejetpackmvvmproject.presentation.compose
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.ActivityResultCallback
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.ActivityResultRegistry
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -22,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.fragment.app.Fragment
 import com.example.composejetpackmvvmproject.R
-import com.example.composejetpackmvvmproject.ui.customview.HorizontalDottedProgress
+import com.example.composejetpackmvvmproject.presentation.customview.HorizontalDottedProgress
 
 class CustomViewWithComposeFragment : Fragment() {
 

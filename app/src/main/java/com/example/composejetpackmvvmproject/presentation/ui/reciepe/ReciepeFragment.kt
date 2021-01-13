@@ -1,19 +1,19 @@
-package com.example.composejetpackmvvmproject.ui.fragment
+package com.example.composejetpackmvvmproject.presentation.ui.reciepe
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.ActivityResultCallback
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.ActivityResultRegistry
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.compose.material.Text
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ReciepeFragment : Fragment() {
 
+    val viewModel:ReciepeViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

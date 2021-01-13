@@ -1,4 +1,4 @@
-package com.example.composejetpackmvvmproject.ui.activity
+package com.example.composejetpackmvvmproject.presentation.compose
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

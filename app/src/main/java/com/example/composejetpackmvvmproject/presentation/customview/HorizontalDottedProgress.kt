@@ -1,4 +1,4 @@
-package com.example.composejetpackmvvmproject.ui.customview
+package com.example.composejetpackmvvmproject.presentation.customview
 
 import android.content.Context
 import android.graphics.Canvas

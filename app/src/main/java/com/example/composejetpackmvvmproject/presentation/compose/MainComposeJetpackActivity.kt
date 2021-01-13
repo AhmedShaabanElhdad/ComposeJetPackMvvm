@@ -1,9 +1,8 @@
-package com.example.composejetpackmvvmproject.ui.activity
+package com.example.composejetpackmvvmproject.presentation.compose
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.composejetpackmvvmproject.R
-import com.example.composejetpackmvvmproject.ui.fragment.CustomViewWithComposeFragment
 
 class MainComposeJetpackActivity : AppCompatActivity() {
 

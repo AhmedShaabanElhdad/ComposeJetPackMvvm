@@ -1,4 +1,4 @@
-package com.example.composejetpackmvvmproject.ui.fragment
+package com.example.composejetpackmvvmproject.presentation.ui.reciepeList
 
 //import androidx.navigation.NavController
 //import androidx.navigation.findNavController
@@ -17,10 +17,17 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.example.composejetpackmvvmproject.R
+import com.example.composejetpackmvvmproject.presentation.ui.reciepe.ReciepeViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ReciepeListFragment : Fragment() {
+
+
+    val viewModel: ReciepeListViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,6 +36,7 @@ class ReciepeListFragment : Fragment() {
     ): View? {
         val view = ComposeView(requireContext()).apply {
             setContent {
+                val receipes = viewModel.recipes.value
                 Column(
                     modifier = Modifier.padding(
                         20.dp
