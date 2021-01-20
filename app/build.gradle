@@ -1,7 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'kotlin-android-extensions'
+//    id 'kotlin-android-extensions'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
 }
@@ -33,10 +33,10 @@ android {
         useIR = true
     }
     composeOptions {
-        def kotlin_compiler_version = "1.4.0"
+        def kotlin_compiler_version = "1.4.21"
         kotlinCompilerVersion kotlin_compiler_version
 
-        def kotlin_compiler_extension_version = "1.0.0-alpha05"
+        def kotlin_compiler_extension_version = "1.0.0-alpha09"
         kotlinCompilerExtensionVersion kotlin_compiler_extension_version
     }
     buildFeatures {
@@ -73,7 +73,7 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$retrofit"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit"
 
-    def compose = "1.0.0-alpha08"
+    def compose = "1.0.0-alpha09"
     implementation "androidx.compose.ui:ui:$compose"
     implementation "androidx.compose.foundation:foundation:$compose"
     implementation "androidx.compose.runtime:runtime-livedata:$compose"
@@ -91,6 +91,11 @@ dependencies {
     def hilt_lifecycle = "1.0.0-alpha02"
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:$hilt_lifecycle"
     kapt "androidx.hilt:hilt-compiler:$hilt_lifecycle"
+
+
+    def glide = "4.11.0"
+    implementation "com.github.bumptech.glide:glide:$glide"
+    annotationProcessor "com.github.bumptech.glide:compiler:$glide"
 
 
 

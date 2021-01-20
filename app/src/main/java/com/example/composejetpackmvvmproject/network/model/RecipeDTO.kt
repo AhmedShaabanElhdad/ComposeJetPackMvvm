@@ -2,9 +2,7 @@ package com.example.composejetpackmvvmproject.network.model
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import kotlinx.android.parcel.Parcelize
 
-@Parcelize
 data class RecipeDTO(
     val pk: Int? = null,
     @SerializedName("cooking_instructions")
@@ -25,4 +23,4 @@ data class RecipeDTO(
     val rating: Int = 0,
     val source_url: String? = null,
     val title: String? = null
-) : Parcelable
+)

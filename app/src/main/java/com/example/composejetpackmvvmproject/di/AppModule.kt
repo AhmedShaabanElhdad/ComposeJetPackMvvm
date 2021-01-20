@@ -4,11 +4,12 @@ import com.example.composejetpackmvvmproject.presentation.BaseApplication
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Singleton
 
 @Module
-@InstallIn(BaseApplication::class)
+@InstallIn(ApplicationComponent::class)
 object AppModule {
 
     @Singleton
