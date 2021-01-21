@@ -34,6 +34,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.example.composejetpackmvvmproject.R
 import com.example.composejetpackmvvmproject.presentation.component.CategoryShip
+import com.example.composejetpackmvvmproject.presentation.component.CircularLoading
 import com.example.composejetpackmvvmproject.presentation.component.RecipeCard
 import com.example.composejetpackmvvmproject.presentation.ui.reciepe.ReciepeViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -56,6 +57,7 @@ class ReciepeListFragment : Fragment() {
             setContent {
                 val receipes = viewModel.recipes.value
                 val selectedCategory: FoodCategory? = viewModel.selectedCategory.value
+                val isLoading:Boolean = viewModel.loading.value
 
                 //three way to save data in compose widget
                 //1- add it in remember block but will recreate when rotate screen
@@ -128,12 +130,15 @@ class ReciepeListFragment : Fragment() {
                         }
 
                     }
-                    LazyColumn {
-                        itemsIndexed(receipes) { index, receipe ->
-                            RecipeCard(
-                                recipe = receipe,
-                                onclick = { })
+                    Box(modifier = Modifier.fillMaxWidth()) {
+                        LazyColumn {
+                            itemsIndexed(receipes) { index, receipe ->
+                                RecipeCard(
+                                    recipe = receipe,
+                                    onclick = { })
+                            }
                         }
+                        CircularLoading(isDisplayed = isLoading)
                     }
                 }
 

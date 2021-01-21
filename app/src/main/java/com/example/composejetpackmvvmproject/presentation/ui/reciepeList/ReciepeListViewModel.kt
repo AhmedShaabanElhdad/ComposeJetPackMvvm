@@ -17,9 +17,10 @@ class ReciepeListViewModel @ViewModelInject constructor(
 
 
     val query = mutableStateOf("")
-    var selectedPosititon:Float = 0f
+    var selectedPosititon: Float = 0f
     val recipes: MutableState<List<Recipe>> = mutableStateOf(ArrayList())
     var selectedCategory: MutableState<FoodCategory?> = mutableStateOf(null)
+    var loading: MutableState<Boolean> = mutableStateOf(false)
 
     init {
         onSearch()
@@ -28,23 +29,37 @@ class ReciepeListViewModel @ViewModelInject constructor(
     fun onQueryChange(value: String) {
         query.value = value
     }
+
     fun onCategoryChanged(category: String) {
         val newCategory = getSpecificCategory(category)
         selectedCategory.value = newCategory
         onQueryChange(category)
     }
+
     fun onPositionChanged(newPosition: Float) {
         selectedPosititon = newPosition
     }
 
+    fun clearCategory() {
+        selectedCategory.value = null
+    }
+
+    fun resetData() {
+        recipes.value = listOf()
+        if (selectedCategory.value?.name != query.value)
+            clearCategory()
+    }
+
     fun onSearch() {
+        loading.value = true
+        resetData()
         viewModelScope.launch {
-            val result =repo.search(
+            val result = repo.search(
                 query = query.value,
                 page = 1,
                 tocken = token
             )
-
+            loading.value = false
             recipes.value = result
         }
     }
