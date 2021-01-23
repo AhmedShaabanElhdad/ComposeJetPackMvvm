@@ -33,9 +33,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.example.composejetpackmvvmproject.R
-import com.example.composejetpackmvvmproject.presentation.component.CategoryShip
-import com.example.composejetpackmvvmproject.presentation.component.CircularLoading
-import com.example.composejetpackmvvmproject.presentation.component.RecipeCard
+import com.example.composejetpackmvvmproject.presentation.component.*
+import com.example.composejetpackmvvmproject.presentation.component.HeartAnimation.HeartState.*
 import com.example.composejetpackmvvmproject.presentation.ui.reciepe.ReciepeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -57,7 +56,7 @@ class ReciepeListFragment : Fragment() {
             setContent {
                 val receipes = viewModel.recipes.value
                 val selectedCategory: FoodCategory? = viewModel.selectedCategory.value
-                val isLoading:Boolean = viewModel.loading.value
+                val isLoading: Boolean = viewModel.loading.value
 
                 //three way to save data in compose widget
                 //1- add it in remember block but will recreate when rotate screen
@@ -130,16 +129,37 @@ class ReciepeListFragment : Fragment() {
                         }
 
                     }
-                    Box(modifier = Modifier.fillMaxWidth()) {
-                        LazyColumn {
-                            itemsIndexed(receipes) { index, receipe ->
-                                RecipeCard(
-                                    recipe = receipe,
-                                    onclick = { })
-                            }
-                        }
-                        CircularLoading(isDisplayed = isLoading)
+                    pulseAnimation()
+
+
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth().height(200.dp),
+                        horizontalArrangement = Arrangement.Center
+                    ){
+                        val state = remember { mutableStateOf(IDLE) }
+                        HeartAnimation.AnimatedHeartButton(
+                            modifier = Modifier.align(Alignment.CenterVertically),
+                            heartState = state,
+                            onToggle = {
+                                state.value = if (state.value == IDLE)
+                                    ACTIVE
+                                else
+                                    IDLE
+                            })
                     }
+
+
+//                    Box(modifier = Modifier.fillMaxWidth()) {
+//                        LazyColumn {
+//                            itemsIndexed(receipes) { index, receipe ->
+//                                RecipeCard(
+//                                    recipe = receipe,
+//                                    onclick = { })
+//                            }
+//                        }
+//                        CircularLoading(isDisplayed = isLoading)
+//                    }
                 }
 
 
