@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.composejetpackmvvmproject.domain.model.Recipe
 import com.example.composejetpackmvvmproject.repository.RecipeRepository
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Named
 
@@ -59,6 +60,7 @@ class ReciepeListViewModel @ViewModelInject constructor(
                 page = 1,
                 tocken = token
             )
+            delay(1000)
             loading.value = false
             recipes.value = result
         }

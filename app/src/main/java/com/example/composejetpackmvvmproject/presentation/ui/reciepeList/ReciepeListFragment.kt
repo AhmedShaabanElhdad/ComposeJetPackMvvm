@@ -3,7 +3,6 @@ package com.example.composejetpackmvvmproject.presentation.ui.reciepeList
 //import androidx.navigation.NavController
 //import androidx.navigation.findNavController
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +14,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.savedinstancestate.savedInstanceState
@@ -26,18 +24,13 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
-import androidx.core.view.forEach
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.findNavController
-import com.example.composejetpackmvvmproject.R
+import com.example.composejetpackmvvmproject.presentation.animation.HeartAnimationDefination.HeartState.ACTIVE
+import com.example.composejetpackmvvmproject.presentation.animation.HeartAnimationDefination.HeartState.IDLE
 import com.example.composejetpackmvvmproject.presentation.component.*
-import com.example.composejetpackmvvmproject.presentation.component.HeartAnimation.HeartState.*
-import com.example.composejetpackmvvmproject.presentation.ui.reciepe.ReciepeViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.MutableStateFlow
 
 @AndroidEntryPoint
 class ReciepeListFragment : Fragment() {
@@ -129,37 +122,39 @@ class ReciepeListFragment : Fragment() {
                         }
 
                     }
-                    pulseAnimation()
-
-
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth().height(200.dp),
-                        horizontalArrangement = Arrangement.Center
-                    ){
-                        val state = remember { mutableStateOf(IDLE) }
-                        HeartAnimation.AnimatedHeartButton(
-                            modifier = Modifier.align(Alignment.CenterVertically),
-                            heartState = state,
-                            onToggle = {
-                                state.value = if (state.value == IDLE)
-                                    ACTIVE
-                                else
-                                    IDLE
-                            })
-                    }
-
-
-//                    Box(modifier = Modifier.fillMaxWidth()) {
-//                        LazyColumn {
-//                            itemsIndexed(receipes) { index, receipe ->
-//                                RecipeCard(
-//                                    recipe = receipe,
-//                                    onclick = { })
-//                            }
-//                        }
-//                        CircularLoading(isDisplayed = isLoading)
+//                    pulseAnimation()
+//
+//                    Row(
+//                        modifier = Modifier.fillMaxWidth().height(100.dp),
+//                        horizontalArrangement = Arrangement.Center
+//                    ) {
+//                        val state = remember { mutableStateOf(IDLE) }
+//                        HeartAnimation.AnimatedHeartButton(
+//                            modifier = Modifier.align(Alignment.CenterVertically),
+//                            heartState = state,
+//                            onToggle = {
+//                                state.value = if (state.value == IDLE)
+//                                    ACTIVE
+//                                else
+//                                    IDLE
+//                            })
 //                    }
+
+
+                    if (isLoading) {
+                        LoadRecipesListShimmer(imageHeight = 250.dp)
+                    } else {
+                        Box(modifier = Modifier.fillMaxWidth()) {
+                            LazyColumn {
+                                itemsIndexed(receipes) { index, receipe ->
+                                    RecipeCard(
+                                        recipe = receipe,
+                                        onclick = { })
+                                }
+                            }
+                        }
+                        CircularLoading(isDisplayed = isLoading)
+                    }
                 }
 
 
