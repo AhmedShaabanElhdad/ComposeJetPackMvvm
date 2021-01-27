@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ComposeJetpackMvvmProject">
         <activity android:name=".presentation.MainActivity"
-            android:theme="@style/Theme.ComposeJetpackMvvmProject.NoActionBar">
+            android:theme="@style/Theme.MaterialComponents.NoActionBar">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,7 +28,7 @@
         <activity
             android:name=".presentation.compose.ColumnRowLayoutActivity"
             android:label="@string/app_name"
-            android:theme="@style/Theme.ComposeJetpackMvvmProject.NoActionBar"></activity>
+            android:theme="@style/Theme.Design.NoActionBar"></activity>
     </application>
 
 </manifest>

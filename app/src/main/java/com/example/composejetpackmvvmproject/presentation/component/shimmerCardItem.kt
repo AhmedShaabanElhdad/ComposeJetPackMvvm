@@ -31,7 +31,7 @@ fun ShimmerCardItem(
         end = Offset(x = XShimmer,YShimmer)
     )
 
-    Column(modifier = Modifier.padding(padding)) {
+    Column(modifier = Modifier.padding(padding).background(MaterialTheme.colors.background)) {
         Surface(shape = MaterialTheme.shapes.small) {
             Spacer(modifier = Modifier.fillMaxWidth().preferredHeight(height).background(brush = brush))
         }

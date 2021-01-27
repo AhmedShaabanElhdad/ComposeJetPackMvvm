@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.ScrollableRow
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
@@ -27,14 +28,19 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.example.composejetpackmvvmproject.presentation.BaseApplication
 import com.example.composejetpackmvvmproject.presentation.animation.HeartAnimationDefination.HeartState.ACTIVE
 import com.example.composejetpackmvvmproject.presentation.animation.HeartAnimationDefination.HeartState.IDLE
 import com.example.composejetpackmvvmproject.presentation.component.*
+import com.example.composejetpackmvvmproject.presentation.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ReciepeListFragment : Fragment() {
 
+    @Inject
+    lateinit var application:BaseApplication
 
     val viewModel: ReciepeListViewModel by viewModels()
 
@@ -47,6 +53,7 @@ class ReciepeListFragment : Fragment() {
 
 
             setContent {
+
                 val receipes = viewModel.recipes.value
                 val selectedCategory: FoodCategory? = viewModel.selectedCategory.value
                 val isLoading: Boolean = viewModel.loading.value
@@ -59,69 +66,79 @@ class ReciepeListFragment : Fragment() {
                 //3- add it viewmodel lifecycle
                 val query = viewModel.query.value
 
-                Column {
 
-                    Surface(
-                        modifier = Modifier.fillMaxWidth().padding(2.dp),
-                        elevation = 8.dp,
-                        color = Color.White
-                    ) {
-                        Column {
-                            Row(
-                                Modifier.fillMaxWidth()
-                            ) {
-                                TextField(
-                                    modifier = Modifier.fillMaxWidth(0.9f).padding(8.dp),
-                                    value = query,
-                                    onValueChange = { value ->
-                                        viewModel.onQueryChange(value)
-                                        //_query.value = value
-                                        //queryy.value = value
-                                    },
-                                    label = {
-                                        Text(text = "Search")
-                                    },
-                                    keyboardOptions = KeyboardOptions(
-                                        keyboardType = KeyboardType.Text,
-                                        imeAction = ImeAction.Search,
-                                    ),
-                                    leadingIcon = {
-                                        Icon(Icons.Filled.Search)
-                                    },
-                                    onImeActionPerformed = { action, softKeyboardController ->
-                                        if (action == ImeAction.Search) {
-                                            viewModel.onSearch()
-                                            softKeyboardController?.hideSoftwareKeyboard()
-                                        }
-                                    },
-                                    textStyle = TextStyle(color = MaterialTheme.colors.onSurface),
-                                    backgroundColor = MaterialTheme.colors.surface,
-                                )
-                            }
+                AppTheme(darkTheme = application.isDark.value) {
+                    Column(modifier = Modifier.background(MaterialTheme.colors.background)) {
 
-                            var scrollState = rememberScrollState()
-
-                            ScrollableRow(
-                                scrollState = scrollState
-                            ) {
-                                scrollState.scrollTo(viewModel.selectedPosititon)
-                                for (category in getAllCategory()) {
-                                    CategoryShip(
-                                        category = category.name,
-                                        isSelected = category == selectedCategory,
-                                        onSelectedChange = {
-                                            viewModel.onCategoryChanged(it)
-                                            viewModel.onPositionChanged(scrollState.value)
+                        Surface(
+                            modifier = Modifier.fillMaxWidth().padding(2.dp),
+                            elevation = 8.dp,
+                            color = MaterialTheme.colors.surface
+                        ) {
+                            Column {
+                                Row(
+                                    Modifier.fillMaxWidth()
+                                ) {
+                                    TextField(
+                                        modifier = Modifier.fillMaxWidth(0.9f).padding(8.dp),
+                                        value = query,
+                                        onValueChange = { value ->
+                                            viewModel.onQueryChange(value)
+                                            //_query.value = value
+                                            //queryy.value = value
                                         },
-                                        onclick = {
-                                            viewModel.onSearch()
-                                        }
+                                        label = {
+                                            Text(text = "Search")
+                                        },
+                                        keyboardOptions = KeyboardOptions(
+                                            keyboardType = KeyboardType.Text,
+                                            imeAction = ImeAction.Search,
+                                        ),
+                                        leadingIcon = {
+                                            Icon(Icons.Filled.Search)
+                                        },
+                                        onImeActionPerformed = { action, softKeyboardController ->
+                                            if (action == ImeAction.Search) {
+                                                viewModel.onSearch()
+                                                softKeyboardController?.hideSoftwareKeyboard()
+                                            }
+                                        },
+                                        textStyle = TextStyle(color = MaterialTheme.colors.onSurface),
+                                        backgroundColor = MaterialTheme.colors.surface,
                                     )
+                                    ConstraintLayout(modifier = Modifier.align(Alignment.CenterVertically)) {
+                                        val switch = createRef()
+                                        Switch(modifier = Modifier.constrainAs(switch){
+                                            top.linkTo(parent.top)
+                                            bottom.linkTo(parent.bottom)
+                                            end.linkTo(parent.end)
+                                        },checked = application.isDark.value, onCheckedChange = {application.toggleSwitch()})
+                                    }
+                                }
+
+                                var scrollState = rememberScrollState()
+
+                                ScrollableRow(
+                                    scrollState = scrollState
+                                ) {
+                                    scrollState.scrollTo(viewModel.selectedPosititon)
+                                    for (category in getAllCategory()) {
+                                        CategoryShip(
+                                            category = category.name,
+                                            isSelected = category == selectedCategory,
+                                            onSelectedChange = {
+                                                viewModel.onCategoryChanged(it)
+                                                viewModel.onPositionChanged(scrollState.value)
+                                            },
+                                            onclick = {
+                                                viewModel.onSearch()
+                                            }
+                                        )
+                                    }
                                 }
                             }
-                        }
 
-                    }
+                        }
 //                    pulseAnimation()
 //
 //                    Row(
@@ -141,21 +158,24 @@ class ReciepeListFragment : Fragment() {
 //                    }
 
 
-                    if (isLoading) {
-                        LoadRecipesListShimmer(imageHeight = 250.dp)
-                    } else {
-                        Box(modifier = Modifier.fillMaxWidth()) {
-                            LazyColumn {
-                                itemsIndexed(receipes) { index, receipe ->
-                                    RecipeCard(
-                                        recipe = receipe,
-                                        onclick = { })
+                        if (isLoading) {
+                            LoadRecipesListShimmer(imageHeight = 250.dp)
+                        } else {
+                            Box(modifier = Modifier.fillMaxWidth()) {
+                                LazyColumn {
+                                    itemsIndexed(receipes) { index, receipe ->
+                                        RecipeCard(
+                                            recipe = receipe,
+                                            onclick = { })
+                                    }
                                 }
                             }
+                            CircularLoading(isDisplayed = isLoading)
                         }
-                        CircularLoading(isDisplayed = isLoading)
                     }
                 }
+
+
 
 
 //                val receipes = viewModel.recipes.value

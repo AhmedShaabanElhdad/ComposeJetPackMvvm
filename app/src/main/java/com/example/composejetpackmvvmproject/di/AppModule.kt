@@ -1,5 +1,6 @@
 package com.example.composejetpackmvvmproject.di
 
+import android.content.Context
 import com.example.composejetpackmvvmproject.presentation.BaseApplication
 import dagger.Module
 import dagger.Provides
@@ -14,7 +15,7 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideApp(@ApplicationContext app: ApplicationContext): BaseApplication {
+    fun provideApp(@ApplicationContext app: Context): BaseApplication {
         return  app as BaseApplication
     }
 
