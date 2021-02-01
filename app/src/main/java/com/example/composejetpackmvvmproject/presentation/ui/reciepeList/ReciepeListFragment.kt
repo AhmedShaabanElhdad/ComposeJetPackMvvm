@@ -61,6 +61,7 @@ class ReciepeListFragment : Fragment() {
                 val receipes = viewModel.recipes.value
                 val selectedCategory: FoodCategory? = viewModel.selectedCategory.value
                 val isLoading: Boolean = viewModel.loading.value
+                val reciepeScrollPosition =  viewModel.recipeScrollPosition
 
                 /**********************************************************************/
 
@@ -207,12 +208,15 @@ class ReciepeListFragment : Fragment() {
                             modifier = Modifier.fillMaxWidth()
                                 .background(MaterialTheme.colors.surface)
                         ) {
-                            if (isLoading) {
+                            if (isLoading&&receipes.isEmpty()) {
                                 LoadRecipesListShimmer(imageHeight = 250.dp)
                             } else {
 
                                 LazyColumn {
                                     itemsIndexed(receipes) { index, receipe ->
+                                        viewModel.onChangeRecipeScrollPosition(index)
+                                        if (!isLoading)
+                                            viewModel.onGetNext()
                                         RecipeCard(
                                             recipe = receipe,
                                             onclick = { })
