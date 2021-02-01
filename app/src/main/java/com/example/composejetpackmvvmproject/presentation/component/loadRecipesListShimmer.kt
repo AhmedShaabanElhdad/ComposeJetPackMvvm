@@ -2,8 +2,11 @@ package com.example.composejetpackmvvmproject.presentation.component
 
 import androidx.compose.animation.transition
 import androidx.compose.foundation.ScrollableColumn
+import androidx.compose.foundation.background
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.WithConstraints
 import androidx.compose.ui.platform.AmbientDensity
@@ -44,7 +47,7 @@ fun LoadRecipesListShimmer(imageHeight: Dp, padding: Dp = 16.dp) {
             Color.LightGray.copy(alpha = 0.9f)
         )
 
-        ScrollableColumn {
+        ScrollableColumn(modifier = Modifier.background(MaterialTheme.colors.surface)) {
             repeat(5){
                 ShimmerCardItem(
                     colors = colors,
