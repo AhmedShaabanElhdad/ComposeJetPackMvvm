@@ -33,8 +33,8 @@ import com.example.composejetpackmvvmproject.presentation.BaseApplication
 import com.example.composejetpackmvvmproject.presentation.component.*
 import com.example.composejetpackmvvmproject.presentation.component.controller.SnackBarController
 import com.example.composejetpackmvvmproject.presentation.theme.AppTheme
+import com.example.composejetpackmvvmproject.presentation.ui.reciepeList.ReciepeListEvent.*
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @ExperimentalMaterialApi
@@ -148,7 +148,7 @@ class ReciepeListFragment : Fragment() {
                                                         )
 //
                                                     } else
-                                                        viewModel.onSearch()
+                                                        viewModel.onTriggerEvent(SearchEvent)
                                                     softKeyboardController?.hideSoftwareKeyboard()
                                                 }
                                             },
@@ -183,7 +183,7 @@ class ReciepeListFragment : Fragment() {
                                                     viewModel.onPositionChanged(scrollState.value)
                                                 },
                                                 onclick = {
-                                                    viewModel.onSearch()
+                                                    viewModel.onTriggerEvent(SearchEvent)
                                                 }
                                             )
                                         }
@@ -216,7 +216,7 @@ class ReciepeListFragment : Fragment() {
                                     itemsIndexed(receipes) { index, receipe ->
                                         viewModel.onChangeRecipeScrollPosition(index)
                                         if (!isLoading)
-                                            viewModel.onGetNext()
+                                            viewModel.onTriggerEvent(GetNextPageEvent)
                                         RecipeCard(
                                             recipe = receipe,
                                             onclick = { })

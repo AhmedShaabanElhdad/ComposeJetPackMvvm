@@ -1,12 +1,15 @@
 package com.example.composejetpackmvvmproject.presentation.ui.reciepeList
 
+import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.composejetpackmvvmproject.domain.model.Recipe
+import com.example.composejetpackmvvmproject.presentation.ui.reciepeList.ReciepeListEvent.*
 import com.example.composejetpackmvvmproject.repository.RecipeRepository
+import com.example.composejetpackmvvmproject.utiles.TAG
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Named
@@ -35,49 +38,60 @@ class ReciepeListViewModel @ViewModelInject constructor(
     var recipeScrollPosition = 0
 
     init {
-        onSearch()
+        onTriggerEvent(SearchEvent)
     }
 
-
-    //search will
-    fun onSearch() {
-        loading.value = true
-        resetData()
+    fun onTriggerEvent(event: ReciepeListEvent) {
         viewModelScope.launch {
-            val result = repo.search(
-                query = query.value,
-                page = 1,
-                tocken = token
-            )
-            delay(1000)
-            loading.value = false
-            recipes.value = result
+            try {
+                when (event) {
+                    is SearchEvent -> onSearch()
+                    is GetNextPageEvent -> getNext()
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "onTriggerEvent: ${e.cause}")
+            }
         }
     }
 
+    //    #Use Case (1)
+    //search will
+    private suspend fun onSearch() {
+        loading.value = true
+        resetData()
+        val result = repo.search(
+            query = query.value,
+            page = 1,
+            tocken = token
+        )
+        delay(1000)
+        loading.value = false
+        recipes.value = result
+
+    }
+
+    //    #Use Case (2)
     // use pagination from scratch is very well rather than using other pagination library
     // as i can't handle more than data source in my code
     // like caching component nad network component
-    fun onGetNext() {
-        viewModelScope.launch {
-            if (recipeScrollPosition + 1 >= (page.value * PAGESIZE)) {
-                loading.value = true
-                increasePage()
+    private suspend fun getNext() {
+        if (recipeScrollPosition + 1 >= (page.value * PAGESIZE)) {
+            loading.value = true
+            increasePage()
 
-                //this check for the first time app is open
-                if (page.value > 1) {
-                    val result = repo.search(
-                        query = query.value,
-                        page = page.value,
-                        tocken = token
-                    )
-                    print("result is $result")
-                    delay(1000)
-                    appendRecipes(result)
-                }
-                loading.value = false
-
+            //this check for the first time app is open
+            if (page.value > 1) {
+                val result = repo.search(
+                    query = query.value,
+                    page = page.value,
+                    tocken = token
+                )
+                print("result is $result")
+                delay(1000)
+                appendRecipes(result)
             }
+            loading.value = false
+
         }
     }
 
