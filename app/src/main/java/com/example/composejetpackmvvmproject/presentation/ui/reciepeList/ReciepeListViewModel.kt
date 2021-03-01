@@ -14,6 +14,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Named
 
+// for pagination
 const val PAGESIZE = 30
 
 class ReciepeListViewModel @ViewModelInject constructor(
@@ -95,6 +96,7 @@ class ReciepeListViewModel @ViewModelInject constructor(
         }
     }
 
+    // add new list to my previous list
     private fun appendRecipes(result: List<Recipe>) {
         val current = ArrayList(recipes.value)
         current.addAll(result)
@@ -102,6 +104,7 @@ class ReciepeListViewModel @ViewModelInject constructor(
     }
 
 
+    // change query
     fun onQueryChange(value: String) {
         query.value = value
     }

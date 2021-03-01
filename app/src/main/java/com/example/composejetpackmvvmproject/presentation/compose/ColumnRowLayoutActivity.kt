@@ -22,6 +22,9 @@ import com.example.composejetpackmvvmproject.R
 class ColumnRowLayoutActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // here will use some Column and Row like Linear Layout
+
         setContent {
             ScrollableColumn(
                 modifier = Modifier.fillMaxWidth()

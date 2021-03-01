@@ -4,6 +4,7 @@ import android.net.NetworkCapabilities
 import android.os.Build
 import android.util.Log
 
+//there is more than ways to handle this
 fun isOnline(context: Context): Boolean {
     val connectivityManager =
         context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager

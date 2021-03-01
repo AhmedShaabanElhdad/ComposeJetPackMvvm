@@ -2,6 +2,8 @@ package com.example.composejetpackmvvmproject.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 
+// this is how to handle theming in android compose rather than sing xml
+
 val BLUE200 = Color(0xff91c9f4)
 val BLUE300 = Color(0xff68b4ef)
 val BLUE400 = Color(0xff48a4ed)

@@ -29,6 +29,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import com.example.composejetpackmvvmproject.R
 import com.example.composejetpackmvvmproject.presentation.BaseApplication
 import com.example.composejetpackmvvmproject.presentation.component.*
 import com.example.composejetpackmvvmproject.presentation.component.controller.SnackBarController
@@ -219,7 +220,9 @@ class ReciepeListFragment : Fragment() {
                                             viewModel.onTriggerEvent(GetNextPageEvent)
                                         RecipeCard(
                                             recipe = receipe,
-                                            onclick = { })
+                                            onclick = {
+                                                findNavController().navigate(R.id.action_reciepeListFragment_to_reciepeFragment)
+                                            })
                                     }
                                 }
                             }

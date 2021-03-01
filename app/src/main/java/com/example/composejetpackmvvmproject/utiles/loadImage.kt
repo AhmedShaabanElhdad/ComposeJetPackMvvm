@@ -14,6 +14,11 @@ import com.example.composejetpackmvvmproject.R
 import kotlinx.coroutines.flow.emptyFlow
 
 val DEFAULTIMAGE = R.drawable.empty
+
+
+// we had made load image Composable as load image in compose is synchronously so we will make it asynchronously
+// by using glide to add image before get network image and if we will get image from resource
+// we will also use glide to help me to do that
 @Composable
 fun LoadImage(url:String,@DrawableRes defaultImage:Int): MutableState<Bitmap?> {
     var bitmap:MutableState<Bitmap?> = mutableStateOf(null)
